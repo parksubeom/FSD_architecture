@@ -25,12 +25,19 @@ export const usePostMutations = () => {
   const updateMutation = useMutation({
     mutationFn: updatePostApi,
     onSuccess: (updatedPost) => {
-      // 화면(Cache)에 있는 데이터를 찾아서 바꿔치기
       queryClient.setQueriesData({ queryKey: ["postList"] }, (oldData: any) => {
         if (!oldData) return oldData
         return {
           ...oldData,
-          posts: oldData.posts.map((post: Post) => (post.id === updatedPost.id ? updatedPost : post)),
+          posts: oldData.posts.map((post: Post) => {
+            if (post.id === updatedPost.id) {
+              return {
+                ...updatedPost,
+                author: post.author,
+              }
+            }
+            return post
+          }),
         }
       })
     },

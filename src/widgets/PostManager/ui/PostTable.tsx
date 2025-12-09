@@ -11,15 +11,27 @@ interface Props {
   onDelete: (id: number) => void
   onOpenDetail: (post: Post) => void
   onOpenUser: (user: any) => void
+  onLike: (post: Post) => void
+  onDislike: (post: Post) => void
 }
 
-export const PostTable = ({ posts, searchQuery, onEdit, onDelete, onOpenDetail, onOpenUser }: Props) => {
+export const PostTable = ({
+  posts,
+  searchQuery,
+  onEdit,
+  onDelete,
+  onOpenDetail,
+  onOpenUser,
+  onLike, // props 받기
+  onDislike, // props 받기
+}: Props) => {
   const { setSelectedTag, selectedTag } = usePostListStore()
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
+          {/* ... 헤더 생략 (동일) ... */}
           <TableHead className="w-[50px]">ID</TableHead>
           <TableHead>제목</TableHead>
           <TableHead className="w-[150px]">작성자</TableHead>
@@ -30,6 +42,7 @@ export const PostTable = ({ posts, searchQuery, onEdit, onDelete, onOpenDetail, 
       <TableBody>
         {posts.map((post) => (
           <TableRow key={post.id}>
+            {/* ... ID, 제목, 작성자 셀 생략 (동일) ... */}
             <TableCell>{post.id}</TableCell>
             <TableCell>
               <div className="space-y-1">
@@ -52,19 +65,39 @@ export const PostTable = ({ posts, searchQuery, onEdit, onDelete, onOpenDetail, 
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => onOpenUser(post.author)}>
-                <img src={post.author?.image} alt={post.author?.username} className="w-8 h-8 rounded-full" />
-                <span>{post.author?.username}</span>
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => {
+                  if (post.author) onOpenUser(post.author)
+                }}
+              >
+                {post.author ? (
+                  <>
+                    <img src={post.author.image} alt={post.author.username} className="w-8 h-8 rounded-full" />
+                    <span>{post.author.username}</span>
+                  </>
+                ) : (
+                  <div className="flex items-center space-x-2 text-gray-400 cursor-not-allowed">
+                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">?</div>
+                    <span>알 수 없음</span>
+                  </div>
+                )}
               </div>
             </TableCell>
             <TableCell>
               <div className="flex items-center gap-2">
-                <ThumbsUp className="w-4 h-4" />
-                <span>{post.reactions?.likes || 0}</span>
-                <ThumbsDown className="w-4 h-4" />
-                <span>{post.reactions?.dislikes || 0}</span>
+                <Button variant="ghost" size="sm" onClick={() => onLike(post)}>
+                  <ThumbsUp className="w-4 h-4 text-blue-500" />
+                  <span className="ml-1">{post.reactions?.likes || 0}</span>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => onDislike(post)}>
+                  <ThumbsDown className="w-4 h-4 text-red-500" />
+                  <span className="ml-1">{post.reactions?.dislikes || 0}</span>
+                </Button>
               </div>
             </TableCell>
+
+            {/* ... 작업 셀 생략 (동일) ... */}
             <TableCell>
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="sm" onClick={() => onOpenDetail(post)}>

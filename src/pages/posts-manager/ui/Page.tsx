@@ -113,6 +113,26 @@ const PostsManagerPage = () => {
     }
   }
 
+  const handleLikePost = (post: Post) => {
+    updatePost({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        likes: post.reactions.likes + 1, // 좋아요 +1
+      },
+    })
+  }
+
+  const handleDislikePost = (post: Post) => {
+    updatePost({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        dislikes: post.reactions.dislikes + 1, // 싫어요 +1
+      },
+    })
+  }
+
   // --- [6] 렌더링 (Composition) ---
   return (
     <Card className="w-full max-w-6xl mx-auto">
@@ -142,6 +162,8 @@ const PostsManagerPage = () => {
               onDelete={deletePost}
               onOpenDetail={handleOpenDetail}
               onOpenUser={handleOpenUser}
+              onLike={handleLikePost}
+              onDislike={handleDislikePost}
             />
           )}
 
