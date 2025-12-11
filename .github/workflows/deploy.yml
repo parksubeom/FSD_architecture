@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      # 2. 의존성 설치 (package-lock.json 기준)
+      - name: Install dependencies
+        run: pnpm ci
+
+      # 3. 빌드 실행
+      # package.json의 "build": "tsc -b && vite build" 가 실행됩니다.
+      - name: Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+          # GitHub 레포지토리 이름을 Base Path로 주입 (vite.config.ts 설정 필요)
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+
+      # [참고] 예시 코드에 있던 '파일 이름 변경' 단계는 제거했습니다.
+      # 이유: 표준 Vite 빌드는 dist/index.html을 자동으로 생성하므로,
+      # 별도로 이름을 변경할 필요가 없습니다.
+
+      # 4. GitHub Pages 아티팩트 설정
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 5. 빌드 결과물 업로드 (Vite 기본 출력 폴더인 dist 지정)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      # 6. 배포
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
