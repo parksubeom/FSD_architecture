@@ -6,7 +6,7 @@ const BASE_URL = isDev ? "/api" : "https://dummyjson.com"
 
 // 1. 댓글 가져오기
 export const getCommentsByPostId = async (postId: number) => {
-  const response = await fetch(`${BASE_URL}/comments/post/${postId}`)
+  const response = await fetch(`${BASE_URL}/comments/${postId}`)
   return response.json()
 }
 

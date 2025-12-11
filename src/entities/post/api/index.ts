@@ -56,3 +56,31 @@ export const getPostTags = async (): Promise<{ url: string; slug: string; name: 
   const response = await fetch(`${BASE_URL}/posts/tags`)
   return response.json()
 }
+
+// 5. 게시글 추가
+export const addPostApi = async (newPost: { title: string; body: string; userId: number }) => {
+  const response = await fetch(`${BASE_URL}/posts/add`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newPost),
+  })
+  return response.json()
+}
+
+// 6. 게시글 수정 (🔥 좋아요/싫어요 버튼은 이 함수를 사용합니다!)
+export const updatePostApi = async (post: any) => {
+  const response = await fetch(`${BASE_URL}/posts/${post.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  })
+  return response.json()
+}
+
+// 7. 게시글 삭제
+export const deletePostApi = async (id: number) => {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, {
+    method: "DELETE",
+  })
+  return response.json()
+}
