@@ -13,15 +13,8 @@ const Header: React.FC = () => {
         <nav>
           <ul className="flex space-x-4">
             <li>
-              {/* 👈 2. a 태그 대신 Link 사용 / href 대신 to 사용 */}
-              {/* App.tsx의 basename 설정 덕분에 자동으로 /front_.../ 가 붙습니다 */}
               <Link to="/" className="hover:underline">
                 홈
-              </Link>
-            </li>
-            <li>
-              <Link to="/posts" className="hover:underline">
-                게시글 관리
               </Link>
             </li>
             <li>
