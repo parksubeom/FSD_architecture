@@ -19,11 +19,11 @@ export const SettingsPage = () => {
   useEffect(() => {
     if (user) {
       setFormData({
-        username: user.username,
-        email: user.email,
-        phone: user.phone,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        username: user.username || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
       })
     }
   }, [user])
