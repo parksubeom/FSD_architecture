@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
 interface PostListState {
-  // ✅ 유지됨: 필터 상태 (Client State)
+  // 유지됨: 필터 상태 (Client State)
   skip: number
   limit: number
   searchQuery: string

@@ -9,7 +9,6 @@ import { getUserDetail } from "@/entities/user/api"
 
 // 1. FSD Layers Import
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@/shared/ui"
-import { highlightText } from "@/shared/lib/highlight" // 유틸 분리
 import { usePostListStore } from "@/features/post-list/model/store"
 import { usePostListQuery } from "@/features/post-list/model/usePostListQuery.ts"
 import { usePostMutations } from "@/features/manage-post/model/usePostMutations"

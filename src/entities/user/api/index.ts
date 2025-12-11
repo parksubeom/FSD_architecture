@@ -6,7 +6,7 @@ export const getUsers = async (): Promise<UserResponse> => {
   return response.json()
 }
 
-// ✅ 추가: 특정 유저 상세 정보 가져오기 (ID로 조회)
+// 추가: 특정 유저 상세 정보 가져오기 (ID로 조회)
 export const getUserDetail = async (userId: number): Promise<User> => {
   const response = await fetch(`/api/users/${userId}`)
   return response.json()

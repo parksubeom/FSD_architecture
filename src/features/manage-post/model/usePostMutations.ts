@@ -49,7 +49,7 @@ export const usePostMutations = () => {
     onSuccess: (deletedPost) => {
       // ❌ queryClient.invalidateQueries({ queryKey: ['posts'] }) -> 이 코드는 서버가 진짜일 때만 씀
 
-      // ✅ 가짜 API 환경: 화면(Cache)에서 직접 필터링해서 없애버림
+      // 가짜 API 환경: 화면(Cache)에서 직접 필터링해서 없애버림
       queryClient.setQueriesData({ queryKey: ["postList"] }, (oldData: any) => {
         if (!oldData) return oldData
         return {

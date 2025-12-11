@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client"
-import App from "./app/App" // 경로 주의
+import App from "./app/routers/App" // 경로 주의
 import { QueryProvider } from "./app/providers/QueryProvider"
 import "./app/styles/index.css"
 
