@@ -14,7 +14,6 @@ export const usePostListQuery = () => {
     queryFn: async () => {
       let postsData: { posts: Post[]; total: number }
 
-      // ✅ 모든 API 호출 시 limit, skip, sortBy, sortOrder를 빠짐없이 전달합니다.
       if (searchQuery) {
         postsData = await searchPosts(searchQuery, limit, skip, sortBy, sortOrder)
       } else if (selectedTag && selectedTag !== "all") {
