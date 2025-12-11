@@ -2,21 +2,16 @@ import { useEffect, useState } from "react"
 import { Search } from "lucide-react"
 import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui"
 import { usePostListStore } from "../model/store"
-
-// ✅ 배포 환경 대응 로직 추가
-const isDev = import.meta.env.DEV
-const BASE_URL = isDev ? "/api" : "https://dummyjson.com"
+import { getPostTags } from "@/entities/post/api"
 
 export const PostFilterBar = () => {
   const { searchQuery, setSearchQuery, selectedTag, setSelectedTag, sortBy, setSortBy, sortOrder, setSortOrder } =
     usePostListStore()
 
-  // 태그 데이터는 UI에서만 필요하므로 여기서 자체 Fetch
   const [tags, setTags] = useState<{ url: string; slug: string }[]>([])
 
   useEffect(() => {
-    fetch(`${BASE_URL}/posts/tags`)
-      .then((res) => res.json())
+    getPostTags()
       .then((data) => setTags(data))
       .catch((err) => console.error("태그 로딩 실패:", err))
   }, [])

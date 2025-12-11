@@ -1,8 +1,5 @@
 import { PostResponse } from "../model/types"
 
-// ✅ [핵심 변경] 환경에 따라 API 기본 주소 설정
-// 개발 환경(npm run dev): '/api' -> Vite Proxy가 처리
-// 배포 환경(npm run build): 'https://dummyjson.com' -> 실제 서버로 직접 요청
 const isDev = import.meta.env.DEV
 const BASE_URL = isDev ? "/api" : "https://dummyjson.com"
 
@@ -24,7 +21,7 @@ export const getPosts = async (
 ): Promise<PostResponse> => {
   const params = makeParams(limit, skip, sortBy, sortOrder)
   // ✅ /api 대신 BASE_URL 사용
-  const response = await fetch(`${BASE_URL}/posts?${params}`)
+  const response = await fetch(`${BASE_URL}?${params}`)
   return response.json()
 }
 
@@ -38,7 +35,7 @@ export const searchPosts = async (
 ): Promise<PostResponse> => {
   const params = makeParams(limit, skip, sortBy, sortOrder)
   // ✅ /api 대신 BASE_URL 사용
-  const response = await fetch(`${BASE_URL}/posts/search?q=${query}&${params}`)
+  const response = await fetch(`${BASE_URL}/search?q=${query}&${params}`)
   return response.json()
 }
 
@@ -52,6 +49,11 @@ export const getPostsByTag = async (
 ): Promise<PostResponse> => {
   const params = makeParams(limit, skip, sortBy, sortOrder)
   // ✅ /api 대신 BASE_URL 사용
-  const response = await fetch(`${BASE_URL}/posts/tag/${tag}?${params}`)
+  const response = await fetch(`${BASE_URL}/tag/${tag}?${params}`)
+  return response.json()
+}
+// 4. 태그 목록 조회
+export const getPostTags = async (): Promise<{ url: string; slug: string; name: string }[]> => {
+  const response = await fetch(`${BASE_URL}/posts/tags`)
   return response.json()
 }

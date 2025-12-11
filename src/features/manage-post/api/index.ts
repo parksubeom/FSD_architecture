@@ -3,7 +3,7 @@ import { Post } from "@/entities/post/model/types"
 // 1. 게시글 추가
 // (ID는 서버에서 생성하므로 title, body, userId만 보냅니다)
 export const addPostApi = async (newPost: { title: string; body: string; userId: number }) => {
-  const response = await fetch("/api/posts/add", {
+  const response = await fetch("/api/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newPost),
@@ -13,7 +13,7 @@ export const addPostApi = async (newPost: { title: string; body: string; userId:
 
 // 2. 게시글 수정
 export const updatePostApi = async (post: Post) => {
-  const response = await fetch(`/api/posts/${post.id}`, {
+  const response = await fetch(`/api/${post.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(post),
@@ -23,7 +23,7 @@ export const updatePostApi = async (post: Post) => {
 
 // 3. 게시글 삭제
 export const deletePostApi = async (id: number) => {
-  const response = await fetch(`/api/posts/${id}`, {
+  const response = await fetch(`/api/${id}`, {
     method: "DELETE",
   })
   return response.json()
