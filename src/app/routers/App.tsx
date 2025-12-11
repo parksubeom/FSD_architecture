@@ -16,7 +16,7 @@ const App = () => {
           {/* Routes로 감싸서 URL에 따라 다른 컴포넌트를 보여줍니다 */}
           <Routes>
             {/* 1. 메인 접속 시 게시글페이지로 자동 이동 */}
-            <Route path="/" element={<Navigate to="/posts?limit=20&sortOrder=asc" replace />} />
+            <Route path="/" element={<Navigate to="/posts" replace />} />
 
             {/* 2. 대시보드 페이지 */}
             <Route path="/dashboard" element={<DashboardPage />} />
