@@ -23,7 +23,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* 🚨 여기! 이 줄을 추가해야 빨간 줄이 사라집니다! */
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }
